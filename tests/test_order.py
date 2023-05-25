@@ -1,3 +1,4 @@
+import allure
 import pytest
 from pages.order_page import OrderPage
 from datetime import datetime, timedelta
@@ -25,6 +26,7 @@ orders_data = [
 
 
 class TestOrder:
+    @allure.title('Оформление заказа')
     @pytest.mark.parametrize('order', orders_data)
     def test_place_order(self, driver, order):
         ord = OrderPage(driver)

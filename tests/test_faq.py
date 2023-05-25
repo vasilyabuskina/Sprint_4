@@ -1,7 +1,9 @@
-import allure
 from pages.faq_page import FaqPage
+import allure
 
 
+@allure.title('Проверка вопросов о важном')
+@allure.description('Нажимаем на вопрос и проверяем соответствие текста')
 class TestFaq:
 
     def test_click_on_question_1_equal_answer_1(self, driver):

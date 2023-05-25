@@ -1,6 +1,8 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
 
 
 class FaqPage:
@@ -57,6 +59,7 @@ class FaqPage:
         self.scroll_to_element(self.question_8)
         WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.question_8)).click()
 
+    @allure.step('Скролл до элемента')
     def scroll_to_element(self, locator):
         return self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*locator))
 
