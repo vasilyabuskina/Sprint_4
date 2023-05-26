@@ -8,6 +8,7 @@ class FaqPage(BasePage):
 
     def __init__(self, driver):
         self.driver = driver
+        super().__init__(driver)
 
     @allure.step('Сравниваем соответствие вопрос-ответ')
     def quest_match_answer(self, quest_locator, answer_locator, answer_text):
