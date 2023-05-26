@@ -4,25 +4,29 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-class BasePage():
-    yandex_logo = [By.XPATH, ".//img[@alt='Yandex']"]
-    scooter_logo = [By.XPATH, ".//img[@alt='Scooter']"]
-    cookie_button = [By.ID, 'rcc-confirm-button']
-    scooter_text_on_main_page = [By. XPATH, '//div[contains(text(),"Самокат")]']
-    dzen_logo = [By.XPATH, '//a[@aria-label="Логотип Дзен"]']
+class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
 
-    allure.step('Принимаем куки')
+    @allure.step('Принимаем куки')
     def accept_cookie(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.cookie_button)).click()
+        cookie_button = [By.ID, 'rcc-confirm-button']
+        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(cookie_button)).click()
 
-    allure.step('Нажимаем на логотип Яндекса')
-    def click_on_yandex_logo(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.yandex_logo)).click()
-        self.driver.switch_to.window(self.driver.window_handles[1])
+    @allure.step('Заполняем поле значением: {value}')
+    def fill(self, locator, value):
+        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator)).send_keys(value)
 
-    allure.step('Нажимаем на логотип "Самоката"')
-    def click_on_scooter_logo(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.scooter_logo)).click()
+    @allure.step('Выбираем значение {value} из выпадающего списка')
+    def select_from_dropdown(self, locator, value):
+        # click on dropdown
+        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator)).send_keys(value)
+        # click on option
+        loc = [By.CLASS_NAME, 'select-search__select']
+        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(loc)).click()
+
+    def wait_for_element_visibility(self, locator):
+        el = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        return el
+

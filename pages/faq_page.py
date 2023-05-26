@@ -2,10 +2,10 @@ import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from pages.base_page import BasePage
 
 
-
-class FaqPage:
+class FaqPage(BasePage):
     faq_head = [By.LINK_TEXT, 'Вопросы о важном']
     question_1 = [By.ID, 'accordion__heading-0']
     question_2 = [By.ID, 'accordion__heading-1']

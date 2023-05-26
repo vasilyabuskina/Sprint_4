@@ -31,3 +31,5 @@ class TestOrder:
     def test_place_order(self, driver, order):
         ord = OrderPage(driver)
         ord.fill_order_page(order)
+        status = ord.wait_for_element_visibility(ord.modal_window_view_order_status_button).text
+        assert status == "Посмотреть статус"

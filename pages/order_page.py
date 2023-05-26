@@ -35,18 +35,6 @@ class OrderPage(BasePage):
         self.driver = driver
         super().__init__(driver)
 
-    @allure.step('Заполняем поле значением: {value}')
-    def fill(self, locator, value):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator)).send_keys(value)
-
-    @allure.step('Выбираем значение {value} из выпадающего списка')
-    def select_from_dropdown(self, locator, value):
-        # click on dropdown
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator)).send_keys(value)
-        # click on option
-        loc = [By.CLASS_NAME, 'select-search__select']
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(loc)).click()
-
     @allure.step('Нажимаем на верхнюю кнопку Заказать')
     def click_on_upper_order_btn(self):
         WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.up_order_button)).click()
@@ -71,6 +59,3 @@ class OrderPage(BasePage):
         self.driver.find_element(*self.order_button).click()
 
         self.driver.find_element(*self.order_confirmation_yes_button_on_popup_window).click()
-
-        status = self.driver.find_element(*self.modal_window_view_order_status_button).text
-        assert status == "Посмотреть статус"
