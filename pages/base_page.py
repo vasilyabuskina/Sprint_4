@@ -9,6 +9,11 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
+    @allure.step('Скролл до элемента')
+    def scroll_to_element(self, locator):
+        el = self.wait_for_element_visibility(locator)
+        return self.driver.execute_script("arguments[0].scrollIntoView();", el)
+
     @allure.step('Принимаем куки')
     def accept_cookie(self):
         cookie_button = [By.ID, 'rcc-confirm-button']
@@ -20,9 +25,7 @@ class BasePage:
 
     @allure.step('Выбираем значение {value} из выпадающего списка')
     def select_from_dropdown(self, locator, value):
-        # click on dropdown
         WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator)).send_keys(value)
-        # click on option
         loc = [By.CLASS_NAME, 'select-search__select']
         WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(loc)).click()
 
